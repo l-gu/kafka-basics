@@ -1,4 +1,4 @@
-package org.demo.kafka.producer;
+package org.demo.kafka.config;
 
 import java.util.Properties;
 
@@ -13,7 +13,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
  * @author L. Guerin
  *
  */
-public class KafkaProperties {
+public class KafkaConfig {
 
 	public static Properties getProperties(String brokers, String username, String password) {
 		
