@@ -17,7 +17,7 @@ public class BasicKafkaProducer {
 	 */
 	public BasicKafkaProducer(String brokers, String username, String password) {
 		super();
-		this.producer = new KafkaProducer<>( KafkaConfig.getProperties(brokers, username, password) );
+		this.producer = new KafkaProducer<>( KafkaConfig.getProducerProperties(brokers, username, password) );
 	}
 
 	/**

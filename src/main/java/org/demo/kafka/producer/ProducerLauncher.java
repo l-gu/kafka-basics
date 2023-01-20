@@ -11,7 +11,7 @@ public class ProducerLauncher {
 		BasicKafkaProducer producer = new BasicKafkaProducer(
 				"glider.srvs.cloudkafka.com:9094", 
 				"ieimnqtz", // user name   
-				"xxxx") ; // user password 
+				"ZuOUQ0mCIhJSRggByPkPcCOpwKrBr77_") ; // user password 
 		
 		// prepare the record
 		String recordValue = "Current time is " + Instant.now().toString();
