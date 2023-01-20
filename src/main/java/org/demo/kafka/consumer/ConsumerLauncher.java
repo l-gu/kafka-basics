@@ -21,7 +21,7 @@ public class ConsumerLauncher {
 		while (true) {
             System.out.println("Consumer : POLL");
             ConsumerRecords<String, String> consumerRecords =
-                    consumer.poll(Duration.ofMillis(1000));
+                    consumer.poll(Duration.ofMillis(1000)); // If duration too short => Exception
             
             System.out.println("Consumer : " + consumerRecords.count() + " record(s) received");
             if ( stop(consumerRecords.count()) ) {

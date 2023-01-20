@@ -30,17 +30,18 @@ public class KafkaConfig {
 		 */		
         props.put("bootstrap.servers", brokers);
         
-        props.put("group.id", username + "-consumer");
+        
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
+        
         props.put("auto.offset.reset", "earliest");
         props.put("session.timeout.ms", "30000");
 
+        props.put("enable.idempotence" , "false"); // added to avoid ClusterAuthorizationException (errorCode=31)
+        
         props.put("security.protocol", "SASL_SSL");
         //props.put("sasl.mechanism", "SCRAM-SHA-256"); 
         props.put("sasl.mechanism", "SCRAM-SHA-512"); // SASL/SCRAM-SHA-512
-        
-        props.put("enable.idempotence" , "false"); // added to avoid ClusterAuthorizationException (errorCode=31)
         
         String jaasTemplate = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";";
         String jaasCfg = String.format(jaasTemplate, username, password);
@@ -72,8 +73,18 @@ public class KafkaConfig {
 
 	public static Properties getConsumerProperties(String brokers, String username, String password, int maxPollRecords) {
 		
+		/*
+		 * For consumer-configuration, see : 
+		 * https://www.conduktor.io/kafka/kafka-consumer-important-settings-poll-and-internal-threads-behavior
+		 * https://docs.confluent.io/platform/current/clients/consumer.html#ak-consumer-configuration
+		 */
 		Properties props = getCommonProperties(brokers, username, password); 
         
+        /*
+         * The group.id is a string that uniquely identifies the group of consumer processes to which this consumer belongs.
+         */
+        props.put("group.id", username + "-consumer");
+
 		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
 		
 		String deserializer = StringDeserializer.class.getName();
